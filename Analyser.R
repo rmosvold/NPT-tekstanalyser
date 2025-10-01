@@ -34,7 +34,7 @@ dfm_data <- mitt_corpus %>%
                 selection='remove') %>% 
   dfm()
 
-dfm_data <- dfm_group(dfm_data, groups = dfm_data$group)
+dfm_data <- dfm_group(dfm_data, groups = dfm_data$gruppe)
 dfm_data <- dfm_remove(dfm_data, c("jo", "5", "1", "eh", "eeh", "mm", "mhm", "mmm", "mmmm", "nei", "uhørbart", "hehe", "to", "ti", "4", "2", "3", "få", "okey", "ok", "okei", "jaja", "oi", "x-2", "fillen", "forsker1", "forsker2", "forsker3", "rosie", "roy"))
 
 # Relativ frekvens analyse med fokus på forskere
@@ -62,6 +62,28 @@ complete_forskere <- tokens(corp_forskere, what = "word",
 complete_forskere <- tokens_select(complete_forskere, stopwords('norwegian'), selection='remove')
 complete_forskere_dfm <- dfm(complete_forskere)
 
+# Forberedelse til å generere ordlister
+# Deler opp teksten i individuelle ord (tokens)
+tokens_fra_corpus <- mitt_corpus %>%
+    tokens(what = "word",
+           remove_punct = TRUE,
+           remove_numbers = TRUE,
+           remove_symbols = TRUE)
+
+# Deretter henter vi ut alle unike ord (types)
+# Funksjonen types() returnerer en karaktervektor med alle unike ord
+unike_ord <- types(tokens_fra_corpus)
+
+# Neste steg er å sortere listen alfabetisk
+# Bruk R sin innebygde sort()-funksjon for å sortere listen
+alfabetisk_liste_unike_ord <- sort(unike_ord)
+
+# For å se hele listen, skriv bare navnet på variabelen
+print(alfabetisk_liste_unike_ord)
+
+# Bruk length() for å telle antall elementer
+antall_unike_ord <- length(alfabetisk_liste_unike_ord)
+antall_unike_ord
 
 # Lese inn ordbok-filer
 faglige_ord <- readLines("Ordbok/faglige.txt")
